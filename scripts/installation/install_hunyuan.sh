@@ -156,7 +156,21 @@ mamba activate "$ENV_NAME"
 # Step 3.4b: Install CUDA toolkit INTO the env (provides nvcc + headers) and point the
 # build toolchain at it. Required to compile custom_rasterizer + DifferentiableRenderer.
 mamba install -y -c nvidia "cuda-toolkit=${CUDA_VERSION}"
+# The PyPI Blender wheel links against desktop X11/OpenGL libraries even for the
+# headless mesh conversion path used by Hunyuan. These are not present on minimal
+# compute nodes and must live in the Conda environment.
+mamba install -y -c conda-forge \
+  xorg-libxi xorg-libsm xorg-libice xorg-libxt \
+  libglu libglvnd level-zero
 export CUDA_HOME="$CONDA_PREFIX"
+# Keep the just-installed Conda shared libraries visible to `bpy` and the
+# renderer extension both during this installer and in commands launched via
+# this environment's activation hook.
+export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:${LD_LIBRARY_PATH:-}"
+mkdir -p "$CONDA_PREFIX/etc/conda/activate.d"
+cat > "$CONDA_PREFIX/etc/conda/activate.d/simfoundry_hunyuan_runtime.sh" <<'EOF'
+export LD_LIBRARY_PATH="${CONDA_PREFIX}/lib:${CONDA_PREFIX}/lib/python3.10/site-packages/torch/lib:${LD_LIBRARY_PATH:-}"
+EOF
 # conda's cuda-toolkit puts headers under targets/x86_64-linux/include (not include/),
 # and the libcuda stub under lib/stubs — expose both to the extension builds.
 export CPLUS_INCLUDE_PATH="$CONDA_PREFIX/targets/x86_64-linux/include:${CPLUS_INCLUDE_PATH:-}"
@@ -176,8 +190,26 @@ pip install "setuptools<80"
 #   - `deepspeed`: NOT imported anywhere in Hunyuan3D, and its setup.py needs a valid
 #     CUDA_HOME at metadata-generation time — when it failed it aborted the ENTIRE
 #     requirements install (leaving trimesh/diffusers/transformers/etc. uninstalled).
+# `tb_nightly==2.18.0a20240726` has disappeared from package indexes, and BasicSR also
+# declares an unpinned dependency on that distribution. Stable TensorBoard 2.18.0 has the
+# runtime modules we need. Install it plus a metadata-only compatibility distribution so
+# pip can satisfy both stale `tb-nightly` requirements without overwriting TensorBoard.
+pip install "tensorboard==2.18.0"
+TB_NIGHTLY_SHIM_DIR="$(mktemp -d)"
+cat > "${TB_NIGHTLY_SHIM_DIR}/setup.py" <<'PY'
+from setuptools import setup
+
+setup(
+    name="tb-nightly",
+    version="2.18.0a20240726",
+    description="Metadata-only compatibility shim; TensorBoard 2.18.0 supplies the runtime",
+)
+PY
+pip install --no-deps "${TB_NIGHTLY_SHIM_DIR}"
+rm -rf "${TB_NIGHTLY_SHIM_DIR}"
+
 pip install -r <(grep -viE '^[[:space:]]*(deepspeed|--extra-index-url.*(aliyun|tencent))' requirements.txt)
-echo "Installed Hunyuan3D requirements (pypi.org index; deepspeed excluded)"
+echo "Installed Hunyuan3D requirements (deepspeed excluded; unavailable tb_nightly replaced by stable TensorBoard plus a metadata shim)"
 # NOTE: the numpy-2 alignment (numpy/open3d/onnxruntime/opencv) is intentionally done LAST
 # (Step 3.9) so that no later step — faiss, requirements_hunyuan, or `pip install -e .` —
 # can revert numpy back to 1.x. Do NOT move it up here.
@@ -193,7 +225,14 @@ cd ../..
 
 # Build the differentiable mesh painter (pybind11 C++ module)
 cd hy3dpaint/DifferentiableRenderer
-bash compile_mesh_painter.sh
+# Some minimal Conda Python packages do not ship `python3-config`, which the
+# upstream one-line script assumes. Query the extension suffix from Python
+# itself and compile with the same interpreter that owns pybind11.
+MESH_PAINTER_EXT_SUFFIX="$(python -c 'import sysconfig; print(sysconfig.get_config_var("EXT_SUFFIX"))')"
+"${CXX:-c++}" -O3 -Wall -shared -std=c++11 -fPIC \
+  $(python -m pybind11 --includes) \
+  mesh_inpaint_processor.cpp \
+  -o "mesh_inpaint_processor${MESH_PAINTER_EXT_SUFFIX}"
 cd ../..
 
 # Step 3.8: Install SimFoundry requirements
@@ -208,13 +247,32 @@ pip install -e .
 #   - numpy 1.24.4 -> 2.2.6
 #   - open3d 0.18.0 -> 0.19.0      (0.18 SEGFAULTS when trimesh.as_open3d gets numpy-2 arrays)
 #   - onnxruntime 1.16.3 -> 1.19.2 (1.16 is numpy-1 ABI: "_ARRAY_API not found")
-#   - opencv: a single numpy-2 build (pinned 4.10.0.84 is numpy-1; rembg also pulls headless)
+#   - opencv: a single numpy-2 headless build (pinned 4.10.0.84 is numpy-1).
+#     BasicSR/RealESRGAN declare `opencv-python`, while rembg declares
+#     `opencv-python-headless`; use the headless wheel as the runtime and install a
+#     metadata-only `opencv-python` compatibility shim to avoid two packages overwriting
+#     the same `cv2` files.
 #   - scipy 1.14.1 (from requirements) is already numpy-2 — pin it so it can't drift.
 # NO FAISS: the hunyuan env only runs stage 7 (mesh-gen) and never imports faiss; conda
 # faiss-gpu=1.12 requires numpy<2 and would downgrade numpy, breaking this whole stack.
 pip uninstall -y opencv-python opencv-python-headless || true
 pip install --no-cache-dir \
-  "numpy==2.2.6" "scipy==1.14.1" "open3d==0.19.0" "onnxruntime==1.19.2" "opencv-python-headless==4.11.0.86"
+  "numpy==2.2.6" "scipy==1.14.1" "open3d==0.19.0" "onnxruntime==1.19.2" \
+  "opencv-python-headless==4.11.0.86" \
+  "google-genai==1.67.0" "pydantic==2.10.6"
+
+OPENCV_SHIM_DIR="$(mktemp -d)"
+cat > "${OPENCV_SHIM_DIR}/setup.py" <<'PY'
+from setuptools import setup
+
+setup(
+    name="opencv-python",
+    version="4.11.0.86",
+    description="Metadata-only compatibility shim; opencv-python-headless supplies cv2",
+)
+PY
+pip install --no-deps "${OPENCV_SHIM_DIR}"
+rm -rf "${OPENCV_SHIM_DIR}"
 echo "Completed installation of Hunyuan3D environment: $ENV_NAME"
 
 mamba deactivate

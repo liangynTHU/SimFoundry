@@ -118,6 +118,21 @@ unchanged on a 24 GiB or a 96 GiB GPU. Add `--max-vram-gb N` only to pin an abso
 On a 24 GiB card, also pass `-- s7_mesh.low_vram=true` — the default needs ~29 GiB for mesh
 shape generation at stage 7.
 
+### Compact OXE / DROID examples
+
+Five self-contained OXE/DROID episodes are included in
+[`examples/oxe_compact/`](examples/oxe_compact/). They contain trajectories,
+metadata, three camera streams, checksums, and a small NumPy reader, so they can
+be inspected after cloning without the original TFDS dataset:
+
+```bash
+python examples/oxe_compact/inspect_episode.py \
+  examples/oxe_compact/droid_episode_000003
+```
+
+Use `reconstruction_input.mp4` from any episode as a Pipeline A video input.
+See the directory README for verification, replay, and reconstruction commands.
+
 Enable automatic articulation decomposition (requires the optional `articulate` environments — see [INSTALL.md](docs/INSTALL.md)):
 
 ```bash

@@ -1,0 +1,294 @@
+{
+  "schema_version": 1,
+  "generated_on": "2026-09-06",
+  "source_format": "Open X-Embodiment / DROID RLDS exported from TFDS",
+  "purpose": "Small, self-contained examples for trajectory loading, camera inspection, SimFoundry video preprocessing, and simulator replay.",
+  "episode_count": 5,
+  "episodes": [
+    {
+      "directory": "droid_episode_000000",
+      "dataset": "droid 1.4.0",
+      "split": "train",
+      "episode_index": 0,
+      "num_steps": 213,
+      "fps": 15.0,
+      "duration_seconds": 14.2,
+      "language_instructions": [
+        "Push the faucet to the right",
+        "Turn the tap nozzle to the left",
+        "Move the faucet to the right."
+      ],
+      "reconstruction_camera": "exterior_image_1_left"
+    },
+    {
+      "directory": "droid_episode_000003",
+      "dataset": "droid 1.4.0",
+      "split": "train",
+      "episode_index": 3,
+      "num_steps": 137,
+      "fps": 15.0,
+      "duration_seconds": 9.133333333333333,
+      "language_instructions": [
+        "Close the cupboard door",
+        "Close the open cabinet door",
+        "Close the right cabinet door"
+      ],
+      "reconstruction_camera": "exterior_image_1_left"
+    },
+    {
+      "directory": "droid_episode_000004",
+      "dataset": "droid 1.4.0",
+      "split": "train",
+      "episode_index": 4,
+      "num_steps": 254,
+      "fps": 15.0,
+      "duration_seconds": 16.933333333333334,
+      "language_instructions": [
+        "Remove the lid from the tall shaker and put it on the table.",
+        "Remove the lid from the shaker",
+        "Remove the lid from the big cup"
+      ],
+      "reconstruction_camera": "exterior_image_1_left"
+    },
+    {
+      "directory": "droid_episode_000005",
+      "dataset": "droid 1.4.0",
+      "split": "train",
+      "episode_index": 5,
+      "num_steps": 154,
+      "fps": 15.0,
+      "duration_seconds": 10.266666666666667,
+      "language_instructions": [
+        "Push the chair forward",
+        "Move the orange chair to the left.",
+        "Move the chair"
+      ],
+      "reconstruction_camera": "exterior_image_1_left"
+    },
+    {
+      "directory": "droid_episode_000008",
+      "dataset": "droid 1.4.0",
+      "split": "train",
+      "episode_index": 8,
+      "num_steps": 302,
+      "fps": 15.0,
+      "duration_seconds": 20.133333333333333,
+      "language_instructions": [
+        "Pour some of the things in the jug into the bowl"
+      ],
+      "reconstruction_camera": "exterior_image_1_left"
+    }
+  ],
+  "files": [
+    {
+      "path": "droid_episode_000000/all_cameras.mp4",
+      "type": "file",
+      "bytes": 2257372,
+      "sha256": "1eb1c73545e992be15afde565226094211c3736046e0c94beb13e9796270a0fd"
+    },
+    {
+      "path": "droid_episode_000000/exterior_image_1_left.mp4",
+      "type": "file",
+      "bytes": 564400,
+      "sha256": "b2bbfd11cff70da0c3a2dc202a4273d2364247712e76182c869e60f6762bb467"
+    },
+    {
+      "path": "droid_episode_000000/exterior_image_2_left.mp4",
+      "type": "file",
+      "bytes": 636278,
+      "sha256": "de18108c3ca4190baf17cbdcbc2cfa3bb66cf40b0a5166413f8c6c1e6c764f59"
+    },
+    {
+      "path": "droid_episode_000000/metadata.json",
+      "type": "file",
+      "bytes": 3127,
+      "sha256": "78b4fdbfa5293b0a86679c260429c40e8665a038dd931e1ccc1a7b7fc59fbbe2"
+    },
+    {
+      "path": "droid_episode_000000/reconstruction_input.mp4",
+      "type": "file",
+      "bytes": 564400,
+      "sha256": "b2bbfd11cff70da0c3a2dc202a4273d2364247712e76182c869e60f6762bb467"
+    },
+    {
+      "path": "droid_episode_000000/trajectory.npz",
+      "type": "file",
+      "bytes": 37790,
+      "sha256": "bcabab74ac0bde6afe521eb96cdb88009bd7ae1932dea1fec952cd334967ff07"
+    },
+    {
+      "path": "droid_episode_000000/wrist_image_left.mp4",
+      "type": "file",
+      "bytes": 1063022,
+      "sha256": "aa201eb8c50ee823334bbb0b008f56b8b4f00528d5abd61b39cbd9790d6d9d01"
+    },
+    {
+      "path": "droid_episode_000003/all_cameras.mp4",
+      "type": "file",
+      "bytes": 1014924,
+      "sha256": "587d9e555bbd554240cc85bcf889e6e1c3a20f7780534a1552440b322d35f776"
+    },
+    {
+      "path": "droid_episode_000003/exterior_image_1_left.mp4",
+      "type": "file",
+      "bytes": 316542,
+      "sha256": "649aa390a35698bd6e6aa7ebd3ead84800ebc5351f9314dc2ba2a76f6ba5db9b"
+    },
+    {
+      "path": "droid_episode_000003/exterior_image_2_left.mp4",
+      "type": "file",
+      "bytes": 321975,
+      "sha256": "ac96ce7be9a27eb0ab7bed9ca7dbfff05040e89bcc44d88434f85abecd634355"
+    },
+    {
+      "path": "droid_episode_000003/metadata.json",
+      "type": "file",
+      "bytes": 3130,
+      "sha256": "7b2e0f325c6dd66c30895bfa5a8a73f61d77e67937a50bec624de974a6b7e6f4"
+    },
+    {
+      "path": "droid_episode_000003/reconstruction_input.mp4",
+      "type": "file",
+      "bytes": 316542,
+      "sha256": "649aa390a35698bd6e6aa7ebd3ead84800ebc5351f9314dc2ba2a76f6ba5db9b"
+    },
+    {
+      "path": "droid_episode_000003/trajectory.npz",
+      "type": "file",
+      "bytes": 26272,
+      "sha256": "6dc52d8f2870f6411add9e20cbf6ba8569b9063e3865d89b7f04dd607b4d455f"
+    },
+    {
+      "path": "droid_episode_000003/wrist_image_left.mp4",
+      "type": "file",
+      "bytes": 379146,
+      "sha256": "5d005a1e133e89a8b8cdc84319c924ecf1a25e1d592b9e6d2053eedc3754e7fd"
+    },
+    {
+      "path": "droid_episode_000004/all_cameras.mp4",
+      "type": "file",
+      "bytes": 1737988,
+      "sha256": "0a6786fd0aadd137eee732202908b33fdcd1f65fd6350613e82a284bc9b17776"
+    },
+    {
+      "path": "droid_episode_000004/exterior_image_1_left.mp4",
+      "type": "file",
+      "bytes": 446088,
+      "sha256": "28385e58919ac282dafc7d96156216b0a9f62262ac236e039748ed29c4f53c18"
+    },
+    {
+      "path": "droid_episode_000004/exterior_image_2_left.mp4",
+      "type": "file",
+      "bytes": 573868,
+      "sha256": "69125147e2659d78a19bce2ed0ce0a2464ee3dd1d6cd81230b88ae0a8052c6b6"
+    },
+    {
+      "path": "droid_episode_000004/metadata.json",
+      "type": "file",
+      "bytes": 3174,
+      "sha256": "925a93f4b7333b51ca1631323e21a6d3b97c12b7b600909a66cc0aa76f838ce5"
+    },
+    {
+      "path": "droid_episode_000004/reconstruction_input.mp4",
+      "type": "file",
+      "bytes": 446088,
+      "sha256": "28385e58919ac282dafc7d96156216b0a9f62262ac236e039748ed29c4f53c18"
+    },
+    {
+      "path": "droid_episode_000004/trajectory.npz",
+      "type": "file",
+      "bytes": 45807,
+      "sha256": "3c01b6a971dbf330d2e8ec4b6a6a18e90f5f8fefdd2da99014b8d50007b56782"
+    },
+    {
+      "path": "droid_episode_000004/wrist_image_left.mp4",
+      "type": "file",
+      "bytes": 724779,
+      "sha256": "0edf122dc8e4de85aec92ac7da7e8ce37f07dd32b8c7a2504ca0c23b425ae525"
+    },
+    {
+      "path": "droid_episode_000005/all_cameras.mp4",
+      "type": "file",
+      "bytes": 1494182,
+      "sha256": "940f436a7ff6555e57d7ed087b51985823cbb21ef323cede76654e0731c55fcf"
+    },
+    {
+      "path": "droid_episode_000005/exterior_image_1_left.mp4",
+      "type": "file",
+      "bytes": 408676,
+      "sha256": "d298d55023105ca2190729a4e61c83dd6beeebc2f12f3805b42f5390d360e520"
+    },
+    {
+      "path": "droid_episode_000005/exterior_image_2_left.mp4",
+      "type": "file",
+      "bytes": 409427,
+      "sha256": "7ddb606486d4e123044c9a548e3e4a5267d82eb62693eee8f442e873331d82e6"
+    },
+    {
+      "path": "droid_episode_000005/metadata.json",
+      "type": "file",
+      "bytes": 3129,
+      "sha256": "36580cc35ab7c7e68e240b981497a01f00e58ac99aa50278f7a68f9fd71edc5e"
+    },
+    {
+      "path": "droid_episode_000005/reconstruction_input.mp4",
+      "type": "file",
+      "bytes": 408676,
+      "sha256": "d298d55023105ca2190729a4e61c83dd6beeebc2f12f3805b42f5390d360e520"
+    },
+    {
+      "path": "droid_episode_000005/trajectory.npz",
+      "type": "file",
+      "bytes": 27543,
+      "sha256": "46eaa93abe3737421f3c9a1815b5f5ef404092d9f7ec6babc6794bf16426824f"
+    },
+    {
+      "path": "droid_episode_000005/wrist_image_left.mp4",
+      "type": "file",
+      "bytes": 688413,
+      "sha256": "b0130c15c55d1eaeac3abf5f1103bb48f436f895d4b6dd3119786acb968ee2b9"
+    },
+    {
+      "path": "droid_episode_000008/all_cameras.mp4",
+      "type": "file",
+      "bytes": 2918131,
+      "sha256": "8d29488775d1070380d8553988ae319f4bc040aba1f9c33fe6cc51cabf4f73c1"
+    },
+    {
+      "path": "droid_episode_000008/exterior_image_1_left.mp4",
+      "type": "file",
+      "bytes": 741615,
+      "sha256": "ef3fd315c75e1f10a5a4b9d94eb7f40a2375ebb96f49331b504a4639bdc205ff"
+    },
+    {
+      "path": "droid_episode_000008/exterior_image_2_left.mp4",
+      "type": "file",
+      "bytes": 811737,
+      "sha256": "ea76d7a11a94ce0fdc360d3abf9dff4d5ebd450e4396818839e28620bcbaddff"
+    },
+    {
+      "path": "droid_episode_000008/metadata.json",
+      "type": "file",
+      "bytes": 3081,
+      "sha256": "ac8a3d04b158934fa1d69b721c7f5fa4f7b1534db3cc4ae20450f5ef8933e231"
+    },
+    {
+      "path": "droid_episode_000008/reconstruction_input.mp4",
+      "type": "file",
+      "bytes": 741615,
+      "sha256": "ef3fd315c75e1f10a5a4b9d94eb7f40a2375ebb96f49331b504a4639bdc205ff"
+    },
+    {
+      "path": "droid_episode_000008/trajectory.npz",
+      "type": "file",
+      "bytes": 54136,
+      "sha256": "e5e6bf5e68dc6a1570d6ef88df0103219033023ffda4ecae9a05ed575f6a4a68"
+    },
+    {
+      "path": "droid_episode_000008/wrist_image_left.mp4",
+      "type": "file",
+      "bytes": 1385198,
+      "sha256": "789411693b1a5bbaff9eba75941f6cfa610f95487bcf40d6e5e27f7732c29f25"
+    }
+  ]
+}

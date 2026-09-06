@@ -1,0 +1,149 @@
+{
+  "source": {
+    "format": "OXE / RLDS / TFDS",
+    "dataset_name": "droid",
+    "dataset_version": "1.4.0",
+    "dataset_root": null,
+    "split": "train",
+    "episode_index": 4,
+    "episode_metadata": {
+      "file_path": "gs://xembodiment_data/r2d2/r2d2-data-full/IPRL/success/2023-09-22/Fri_Sep_22_23:17:35_2023/trajectory.h5",
+      "recording_folderpath": "gs://xembodiment_data/r2d2/r2d2-data-full/IPRL/success/2023-09-22/Fri_Sep_22_23:17:35_2023/recordings/MP4"
+    },
+    "dataset_root_note": "Original machine-local TFDS path omitted; this compact export is self-contained."
+  },
+  "trajectory": {
+    "num_steps": 254,
+    "fps": 15.0,
+    "duration_seconds": 16.933333333333334,
+    "language_instructions": [
+      "Remove the lid from the tall shaker and put it on the table.",
+      "Remove the lid from the shaker",
+      "Remove the lid from the big cup"
+    ],
+    "camera_shapes": {
+      "exterior_image_1_left": [
+        256,
+        256,
+        3
+      ],
+      "exterior_image_2_left": [
+        256,
+        256,
+        3
+      ],
+      "wrist_image_left": [
+        256,
+        256,
+        3
+      ]
+    }
+  },
+  "arrays": {
+    "observation_joint_position": {
+      "shape": [
+        254,
+        7
+      ],
+      "dtype": "float32"
+    },
+    "observation_cartesian_position": {
+      "shape": [
+        254,
+        6
+      ],
+      "dtype": "float32"
+    },
+    "observation_gripper_position": {
+      "shape": [
+        254,
+        1
+      ],
+      "dtype": "float32"
+    },
+    "action_joint_position": {
+      "shape": [
+        254,
+        7
+      ],
+      "dtype": "float32"
+    },
+    "action_joint_velocity": {
+      "shape": [
+        254,
+        7
+      ],
+      "dtype": "float32"
+    },
+    "action_cartesian_position": {
+      "shape": [
+        254,
+        6
+      ],
+      "dtype": "float32"
+    },
+    "action_cartesian_velocity": {
+      "shape": [
+        254,
+        6
+      ],
+      "dtype": "float32"
+    },
+    "action_gripper_position": {
+      "shape": [
+        254,
+        1
+      ],
+      "dtype": "float32"
+    },
+    "action_gripper_velocity": {
+      "shape": [
+        254,
+        1
+      ],
+      "dtype": "float32"
+    },
+    "legacy_action": {
+      "shape": [
+        254,
+        7
+      ],
+      "dtype": "float32"
+    },
+    "reward": {
+      "shape": [
+        254
+      ],
+      "dtype": "float32"
+    },
+    "discount": {
+      "shape": [
+        254
+      ],
+      "dtype": "float32"
+    },
+    "is_first": {
+      "shape": [
+        254
+      ],
+      "dtype": "bool"
+    },
+    "is_last": {
+      "shape": [
+        254
+      ],
+      "dtype": "bool"
+    },
+    "is_terminal": {
+      "shape": [
+        254
+      ],
+      "dtype": "bool"
+    }
+  },
+  "action_conventions": {
+    "legacy_action": "DROID canonical action from this OXE build: Cartesian pose [x,y,z,roll,pitch,yaw] + gripper.",
+    "action_joint_position": "Commanded seven-DoF Franka joint positions from action_dict; used by the included OmniGibson replay bridge.",
+    "action_gripper_position": "DROID convention used by SimFoundry policy code: 0=open, 1=closed. The replay bridge inverts it for OmniGibson."
+  }
+}

@@ -7,7 +7,9 @@ supervision
 pybullet
 setuptools<80.0.0
 google-cloud-aiplatform
-# google-genai
+# Keep compatibility with Hunyuan's Gradio 5.33 / Pydantic 2.10 pin.
+# Newer google-genai releases require Pydantic >=2.12.5.
+google-genai==1.67.0
 # openai
 hydra-core
 probreg
@@ -19,4 +21,3 @@ accelerate
 einops
 # torch_cluster
 tqdm
-

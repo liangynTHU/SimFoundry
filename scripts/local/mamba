@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Compatibility shim for hosts with Conda's libmamba solver but no `mamba` CLI.
+set -euo pipefail
+
+CONDA_EXE="${SIMFOUNDRY_CONDA_EXE:-}"
+if [[ -z "${CONDA_EXE}" ]] && command -v conda >/dev/null 2>&1; then
+    CONDA_EXE="$(command -v conda)"
+fi
+if [[ -z "${CONDA_EXE}" && -x /jizhicfs/peterrao/miniconda3/bin/conda ]]; then
+    CONDA_EXE=/jizhicfs/peterrao/miniconda3/bin/conda
+fi
+if [[ -z "${CONDA_EXE}" || ! -x "${CONDA_EXE}" ]]; then
+    echo "mamba shim: set SIMFOUNDRY_CONDA_EXE to a working conda executable" >&2
+    exit 127
+fi
+
+if [[ "${1:-}" == "shell" && "${2:-}" == "hook" ]]; then
+    shell_name="bash"
+    shift 2
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            --shell)
+                shell_name="${2:?missing value for --shell}"
+                shift 2
+                ;;
+            *)
+                shift
+                ;;
+        esac
+    done
+    "${CONDA_EXE}" "shell.${shell_name}" hook
+    cat <<'SH'
+mamba() {
+    conda "$@"
+}
+SH
+    exit 0
+fi
+
+exec "${CONDA_EXE}" "$@"

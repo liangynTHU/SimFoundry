@@ -1,0 +1,10 @@
+name: simfoundry_oxe
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - ffmpeg
+  - pip
+  - pip:
+      - tensorflow==2.13.0
+      - tensorflow-datasets==4.9.2

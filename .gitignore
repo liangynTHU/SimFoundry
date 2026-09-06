@@ -26,7 +26,10 @@ docs/teaser_video.mp4
 input videos/
 *.deb
 *.log
-*core*
+# Crash dumps (do not hide source files whose names contain "core")
+core
+core.*
+*.core
 
 # auto_bg pipeline: large assets / outputs / logs (not source)
 /simfoundry-assets
@@ -49,3 +52,6 @@ Miniforge3-Linux-x86_64.sh
 .zprofile
 .zshrc
 scripts/experiments/
+
+# Local OXE extraction / simulator rollout artifacts
+/artifacts/
